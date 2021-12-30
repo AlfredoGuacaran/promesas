@@ -1,19 +1,37 @@
-const traerArboles = async function () {
-  const url = 'https://jsonplaceholder.typicode.com/photos';
-  const datos = await fetch(url);
-  const albunes = await datos.json();
+// Requerimiento 1 al 4
 
-  const primeros20 = albunes.slice(0, 20);
+const cargarAlbums = async function () {
+  try {
+    const url = 'https://jsonplaceholder.typicode.com/photos';
+    const datos = await fetch(url);
+    const albunes = await datos.json();
 
-  let html;
+    const primeros20 = albunes.slice(0, 20);
 
-  primeros20.forEach((album) => {
-    html += `<li>${album.title}</li>`;
-  });
+    let html = '';
 
-  console.log(primeros20);
+    primeros20.forEach((album) => {
+      html += `<li>${album.title}</li>`;
+    });
 
-  document.getElementById('lista-albunes').innerHTML = html;
+    document.getElementById('lista-albunes').innerHTML = html;
+  } catch (error) {
+    console.log('Ha ocurrido un problema');
+    console.error(error);
+  }
 };
 
-traerArboles();
+// Requerimiento 4
+
+const enviarInfo = function () {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => resolve('Informacion enviada'), 3000);
+  });
+};
+
+//Requerimiento 5
+
+enviarInfo().then((resp) => {
+  console.log(resp);
+  cargarAlbums();
+});
